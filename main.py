@@ -5,6 +5,14 @@ import numpy as np
 
 from pyboy import PyBoy, WindowEvent
 
+# 🟥🟧🟨🟩🟦🟪🟫⬛⬜
+color_parrets = {"hot": ["⬛", "🟨", "🟧", "🟫"],
+                 "cool": ["🟨", "🟩", "🟪", "🟦"],
+                 "mono": ["⬛", "⬛", "⬜", "⬜"]}
+parret = color_parrets["cool"]
+# pythonでは配列アクセスが関数呼び出し並みに遅いのであらかじめ変数にしておく
+white, light_gray, dark_gray, black = parret
+
 # メモ：実行のとき10回くらい [ctrl -]を押すといい感じ
 # Check if the ROM is given through argv
 if len(sys.argv) > 1:
@@ -43,13 +51,13 @@ for frame in range(1000):
         tmp = ""
         for c in row:
             if c == 255:
-                tmp += "⬜"
+                tmp += white
             elif c == 153:
-                tmp += "🟨"
+                tmp += light_gray
             elif c == 85:
-                tmp += "🟧"
+                tmp += dark_gray
             elif c == 0:
-                tmp += "🟥"
+                tmp += black
             else:
                 raise ValueError("画素の値がおかしい: {}".format(c))
         screen += tmp + "\n"
