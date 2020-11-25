@@ -19,13 +19,18 @@ pyboy = PyBoy(
     window_type="headless" if headless else "SDL2",
     debug=False
 )
-pyboy.set_emulation_speed(0)
+pyboy.set_emulation_speed(1)  # 実機と同じ速度
+# 全フレームのうち描画をする割合、{1//skip_rate}に一回程度描画
+# skip_rate=1/7.5 で30fps程度
+skip_rate = 1/7.5
 
 height = 160
 perf_times = []
 for frame in range(1000):
     start_time = time.perf_counter()
     pyboy.tick()
+    if frame % (1//skip_rate):
+        continue
     # observation: 画面のRGB値(144, 160, 3)
     observation = np.asarray(pyboy.botsupport_manager(
     ).screen().screen_ndarray(), dtype=np.uint8)
@@ -53,9 +58,14 @@ for frame in range(1000):
     sys.stdout.flush()
 
     end_time = time.perf_counter()
+    if frame < 100:  # exclude pyboy's title logo from performance time
+        continue
     perf_times.append(end_time - start_time)
 
 sys.stdout.write("\033[{}B".format(height))
 
-print("Mean performance time: ", sep="")
-print((lambda l: sum(l)/len(l))(perf_times))
+mean_perf_time = (lambda l: sum(l)/len(l))(perf_times)
+
+with open("log.txt", "w") as f:
+    f.write("Mean performance time: {}\n".format(mean_perf_time))
+    f.write("Mean FPS: {:.1f}".format(1/mean_perf_time * 1//skip_rate))
