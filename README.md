@@ -9,7 +9,17 @@
 
 ※まだ操作ができません。
 
+**hot**
 
+![img](README.assets/color_hot.jpg)
+
+**cool**
+
+![img](README.assets/color_cool.jpg)
+
+**dot**
+
+![img](README.assets/color_dot.jpg)
 
 ## 使い方
 
