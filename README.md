@@ -2,6 +2,8 @@
 
 ターミナル上でゲームボーイが動くやつ
 
+※Qiita記事のコードを試せるようにしました→[colab を開く](https://colab.research.google.com/github/dannyso16/Gameboy-on-terminal/blob/master/Qiita_gameboy_on_terminal.ipynb)
+
 ## 機能
 
 - いくつかのカラーパレット
